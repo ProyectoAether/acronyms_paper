@@ -80,7 +80,7 @@ fig = imshow(
     title="Residual Stream Patching", 
     labels={"x": "Sequence Position", "y": "Layer"},
     height=400,
-    width=1000, save_path="images/activations/res_1.pdf"
+    width=1000, save_path="images/activation_patching/res_1.pdf"
 )
 
 act_patch_attn_head_out_all_pos_iter = []
@@ -105,5 +105,5 @@ imshow(
     facet_labels=facet_labels,
     labels={"y": "Layer", "x": "Head"}, 
     title="Patching Attention Heads",
-    width=800
+    width=800, save_path="images/activation_patching/attn_1.pdf"
 )
