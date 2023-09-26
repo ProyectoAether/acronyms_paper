@@ -105,5 +105,5 @@ imshow(
     facet_labels=facet_labels,
     labels={"y": "Layer", "x": "Head"}, 
     title="Patching Attention Heads",
-    width=800, save_path="images/activation_patching/attn_1.pdf"
+    width=800, height=400, save_path="images/activation_patching/attn_1.pdf"
 )
