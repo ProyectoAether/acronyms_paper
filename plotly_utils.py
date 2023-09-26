@@ -1,4 +1,5 @@
 import torch as t
+import time
 from torch import Tensor
 from typing import List, Union, Optional
 import plotly.express as px
@@ -18,7 +19,7 @@ import einops
 
 update_layout_set = {"xaxis_range", "yaxis_range", "hovermode", "xaxis_title", "yaxis_title", "colorbar", "colorscale", "coloraxis", "title_x", "bargap", "bargroupgap", "xaxis_tickformat", "yaxis_tickformat", "title_y", "legend_title_text", "xaxis_showgrid", "xaxis_gridwidth", "xaxis_gridcolor", "yaxis_showgrid", "yaxis_gridwidth", "yaxis_gridcolor", "showlegend", "xaxis_tickmode", "yaxis_tickmode", "margin", "xaxis_visible", "yaxis_visible", "bargap", "bargroupgap", "coloraxis_showscale"}
 
-def imshow(tensor, renderer=None, **kwargs):
+def imshow(tensor, save_path=None, renderer=None, **kwargs):
     kwargs_post = {k: v for k, v in kwargs.items() if k in update_layout_set}
     kwargs_pre = {k: v for k, v in kwargs.items() if k not in update_layout_set}
     facet_labels = kwargs_pre.pop("facet_labels", None)
@@ -40,7 +41,10 @@ def imshow(tensor, renderer=None, **kwargs):
         fig.update_xaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
         fig.update_yaxes(showline=True, linewidth=1, linecolor='black', mirror=True)
     fig.show(renderer=renderer)
-
+    if save_path:
+        fig.write_image(save_path)
+        time.sleep(1)
+        fig.write_image(save_path)
 
 def reorder_list_in_plotly_way(L: list, col_wrap: int):
     '''
