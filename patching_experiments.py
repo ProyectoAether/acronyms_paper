@@ -80,5 +80,30 @@ fig = imshow(
     title="Residual Stream Patching", 
     labels={"x": "Sequence Position", "y": "Layer"},
     height=400,
-    width=1000, save_path="images/fig1.pdf"
+    width=1000, save_path="images/activations/res_1.pdf"
+)
+
+act_patch_attn_head_out_all_pos_iter = []
+indices = [2, 4, 6]
+for i, j in enumerate(indices):
+    # Corrupt just the current word
+    corrupted_tokens_i = clean_tokens.clone()
+    corrupted_tokens_i[:, j:j+2] = corrupted_tokens[:, j:j+2] 
+    _, corrupted_cache_i = model.run_with_cache(corrupted_tokens_i)
+
+    compute_logit_diff_aux = partial(compute_logit_diff_2, answer_tokens=answer_tokens, average=False) # returns (batch_size, 3)
+    compute_logit_diff_iter = lambda logits: compute_logit_diff_aux(logits)[:, i].mean()
+    act_patch_attn_head_out_all_pos = patching.get_act_patch_attn_head_out_all_pos(model, clean_tokens, corrupted_cache_i, compute_logit_diff_iter)
+    act_patch_attn_head_out_all_pos_iter.append(act_patch_attn_head_out_all_pos)
+act_patch_attn_head_out_all_pos_iter = torch.stack(act_patch_attn_head_out_all_pos_iter, dim=0)
+
+baseline_logit_diff = compute_logit_diff_2(clean_logits, answer_tokens, average=False).mean(0)
+
+imshow(
+    act_patch_attn_head_out_all_pos_iter - baseline_logit_diff[..., None, None],
+    facet_col=0,
+    facet_labels=facet_labels,
+    labels={"y": "Layer", "x": "Head"}, 
+    title="Patching Attention Heads",
+    width=800
 )
