@@ -100,9 +100,10 @@ def line(y: Union[t.Tensor, List[t.Tensor]], renderer=None, **kwargs):
         if names is not None:
             fig.for_each_trace(lambda trace: trace.update(name=names.pop(0)))
         fig.show(renderer)
+    
         
 
-def scatter(x, y, renderer=None, **kwargs):
+def scatter(x, y, save_path=None, renderer=None, **kwargs):
     x = to_numpy(x)
     y = to_numpy(y)
     add_line = None
@@ -134,6 +135,10 @@ def scatter(x, y, renderer=None, **kwargs):
         for i, label in enumerate(facet_labels):
             fig.layout.annotations[i]['text'] = label
     fig.show(renderer)
+    if save_path:
+        fig.write_image(save_path)
+        time.sleep(1)
+        fig.write_image(save_path)
 
 def bar(tensor, renderer=None, **kwargs):
     '''
