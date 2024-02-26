@@ -86,3 +86,18 @@ fig.update_layout(showlegend=False)
 fig.write_image(f"images/histograms/{layer}_{head}.pdf")
 time.sleep(1)
 fig.write_image(f"images/histograms/{layer}_{head}.pdf")
+
+
+heads_to_plot = [[5, 8], [9, 9], [10, 10], [11, 4]]
+
+for layer, head in heads_to_plot:
+    attn_df = get_attn_df(layer, head, clean_cache)
+    
+    fig = px.bar(attn_df, x="Token", y="Attention Probability", error_y="std", facet_col="Letter",
+        title=f"Avg. Attention paid at each prediction by head {layer}.{head}", color="Color", category_orders={'Token': attn_df.Token},
+        width=1000)
+
+    fig.update_layout(showlegend=False)
+    fig.write_image(f"images/histograms/{layer}_{head}.pdf")
+    time.sleep(1)
+    fig.write_image(f"images/histograms/{layer}_{head}.pdf")
