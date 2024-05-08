@@ -19,3 +19,18 @@ Then, run the different scripts to replicate the figures presented in the paper.
 - `evaluation.py`: Figure 8. Evaluates the identified circuit by ablating every attention head and then iteratively adding the components of the circuit, showing that the performance is recovered.
 - `mover_heads.py`: Figures 9, 10, 11. Plots the OV circuits of the individual letter mover heads, as well as the combined OV circuit. It also shows a scatter plot that provides evidence about their copying behavior.
 - `positional_experiments.py`: Figures 12, 13, 14. Experiments performed to study how the positional information is propagated across the circuit.
+
+# Citation
+
+For any question and/or suggestion, do not hesitate to reach out. If you use our work, you can reference it as follows:
+
+```
+@inproceedings{garcia2024does,
+  title={How does GPT-2 Predict Acronyms? Extracting and Understanding a Circuit via Mechanistic Interpretability},
+  author={Garc{\'\i}a-Carrasco, Jorge and Mat{\'e}, Alejandro and Trujillo, Juan Carlos},
+  booktitle={International Conference on Artificial Intelligence and Statistics},
+  pages={3322--3330},
+  year={2024},
+  organization={PMLR}
+}
+```
